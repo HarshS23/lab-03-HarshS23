@@ -16,9 +16,11 @@ public class AddCityFragment extends DialogFragment {
 
     interface AddCityDialogListener {
         void addCity(City city);
+        void editCity(City city, int position);
 
     }
 
+    public AddCityFragment(){ }
     private AddCityDialogListener listener;
 
     @Override
@@ -47,14 +49,23 @@ public class AddCityFragment extends DialogFragment {
 
         return builder
                 .setView(view)
-                .setTitle("Add a city")
+                .setTitle("Add/Edit a city")
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("Add", (dialog, which) -> {
                     String cityName = editCityName.getText().toString();
                     String provinceName = editProvinceName.getText().toString();
-                    listener.addCity(new City(cityName, provinceName));
+
+                    MainActivity activity = (MainActivity) requireActivity();
+                    if(activity.editingPos >= 0){
+                        listener.editCity(new City(cityName,provinceName), activity.editingPos);
+                        activity.editingPos = -1;
+                    }else {
+                        listener.addCity(new City(cityName, provinceName));
+                    }
+                    dismiss();
                 })
                 .create();
     }
+
 
 }

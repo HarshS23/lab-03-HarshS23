@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements AddCityFragment.A
     private ArrayList<City> dataList;
     private ListView cityList;
     private CityArrayAdapter cityAdapter;
-    private int editingPos = -1;  // which item is being edited
+    public int editingPos = -1;  // which item is being edited
 
 
 
@@ -31,8 +31,12 @@ public class MainActivity extends AppCompatActivity implements AddCityFragment.A
 
     }
 
-    public void editCity(City city){
-        cityAdapter.notifyDataSetChanged();
+    public void editCity(City city, int position){
+        if(position >= 0 && position < dataList.size()){
+            dataList.set(position, city);
+            cityAdapter.notifyDataSetChanged();
+
+        }
     }
 
     @Override
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements AddCityFragment.A
         // find view by ID variables
         FloatingActionButton fab = findViewById(R.id.button_add_city);
 
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,12 +70,16 @@ public class MainActivity extends AppCompatActivity implements AddCityFragment.A
 
         cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 editingPos = i;
-                
+                new AddCityFragment().show(getSupportFragmentManager(), "Edit City");
+
+
 
             }
         });
+
+
     }
 
 
