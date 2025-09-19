@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements AddCityFragment.A
     private ListView cityList;
     private CityArrayAdapter cityAdapter;
 
+
     @Override
     public void addCity(City city) {
         cityAdapter.add(city);
@@ -42,7 +43,12 @@ public class MainActivity extends AppCompatActivity implements AddCityFragment.A
         cityAdapter = new CityArrayAdapter(this, dataList);
         cityList.setAdapter(cityAdapter);
 
+
+        // find view by ID variables
         FloatingActionButton fab = findViewById(R.id.button_add_city);
+
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
